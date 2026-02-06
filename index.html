@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>💙 Para ti</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    background:radial-gradient(circle at center,#eeeeee,#fcfcfc);
+   font-family:'Great Vibes',cursive;
+    height:100vh;
+}
+
+/* contenedor central */
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:10;
+}
+
+/* texto */
+h1{
+    color:#8ec5ff;
+    font-size:60px;
+    margin:0;
+    opacity:0;
+    animation:fadeIn 3s forwards;
+    animation-delay:3s;
+    text-shadow:0 0 25px #729bbd;
+}
+
+.sub{
+    color:rgb(20, 19, 19);
+    font-size:26px;
+    margin-top:20px;
+    opacity:0;
+    animation:fadeIn 3s forwards;
+    animation-delay:6s;
+}
+
+/* botón */
+.btn{
+    margin-top:40px;
+    padding:18px 40px;
+    font-size:22px;
+    border:none;
+    border-radius:20px;
+    background:#2196f3;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 25px #2196f3;
+    opacity:0;
+    animation:fadeIn 3s forwards;
+    animation-delay:9s;
+    transition:.3s;
+}
+.btn:hover{
+    transform:scale(1.1);
+    background:#42a5f5;
+    box-shadow:0 0 45px #42a5f5;
+}
+
+@keyframes fadeIn{
+    to{opacity:1;}
+}
+
+/* corazones flotando */
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation:float linear infinite;
+    opacity:0.8;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh) scale(0.5);
+        opacity:0;
+    }
+    20%{opacity:1;}
+    to{
+        transform:translateY(-10vh) scale(1.2);
+        opacity:0;
+    }
+}
+
+/* explosión centro */
+.explosion{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+}
+
+.boom{
+    position:absolute;
+    font-size:30px;
+    opacity:0;
+    animation:boom 3s ease-out forwards;
+}
+
+@keyframes boom{
+    0%{
+        opacity:1;
+        transform:translate(0,0) scale(0.5);
+    }
+    100%{
+        opacity:0;
+        transform:translate(var(--x),var(--y)) scale(1.8);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+    <h1>Holaaaa Bienvenida</h1>
+    <div class="sub">Todo esto fue creado de acuerdo a tus gustos personales con la finalidad de que sea de tu agrado...</div>
+
+    <a href="invitacion.html">
+        <button class="btn">Abrir </button>
+    </a>
+</div>
+
+<!-- explosión inicial -->
+<div class="explosion" id="explosion"></div>
+
+<script>
+// colores
+const colors=["💙","🩵"];
+
+/* lluvia infinita de corazones */
+function rain(){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML=colors[Math.floor(Math.random()*colors.length)];
+    heart.style.left=Math.random()*100+"%";
+    heart.style.fontSize=(15+Math.random()*40)+"px";
+    heart.style.animationDuration=(4+Math.random()*6)+"s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),10000);
+}
+setInterval(rain,120);
+
+/* EXPLOSION EPICA INICIAL */
+const exp=document.getElementById("explosion");
+
+function explode(){
+    for(let i=0;i<80;i++){
+        let b=document.createElement("div");
+        b.className="boom";
+        b.innerHTML="💙";
+
+        let angle=Math.random()*360;
+        let radius=150+Math.random()*200;
+        let x=Math.cos(angle)*radius+"px";
+        let y=Math.sin(angle)*radius+"px";
+
+        b.style.setProperty("--x",x);
+        b.style.setProperty("--y",y);
+        b.style.color=["#4fc3f7","#00e5ff","#29b6f6","#81d4fa"][Math.floor(Math.random()*4)];
+        b.style.animationDelay=(Math.random()*0.5)+"s";
+
+        exp.appendChild(b);
+
+        setTimeout(()=>b.remove(),3000);
+    }
+}
+
+explode();
+</script>
+
+</body>
+</html>
